@@ -8,20 +8,20 @@ import java.io.Serializable;
  * Created by Wanghan on 2017/3/15.
  * Copyright © Wanghan SCU. All Rights Reserved
  */
-public class ProvienceClick implements Serializable {
+public class ProvinceClick implements Serializable {
 
-    private String provience = "";
+    private String province = "";
     private String city = "";
     private String adId = "";
     private String date = "";
     private Long clickNum = 0L;
 
-    public String getProvience() {
-        return provience;
+    public String getProvince() {
+        return province;
     }
 
-    public void setProvience(String provience) {
-        this.provience = provience;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getCity() {

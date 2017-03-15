@@ -20,7 +20,7 @@ import java.util.LinkedList;
 public class JDBCHelper {
 
     static {
-        String driver = ConfigurationManager.getProperty(Constants.JDBC_DRIVER);
+        String driver = ConfigurationManager.getString(Constants.JDBC_DRIVER);
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -60,13 +60,13 @@ public class JDBCHelper {
             String password = null;
 
             if (local) {
-                url = ConfigurationManager.getProperty(Constants.JDBC_URL);
-                user = ConfigurationManager.getProperty(Constants.JDBC_USER);
-                password = ConfigurationManager.getProperty(Constants.JDBC_PASSWORD);
+                url = ConfigurationManager.getString(Constants.JDBC_URL);
+                user = ConfigurationManager.getString(Constants.JDBC_USER);
+                password = ConfigurationManager.getString(Constants.JDBC_PASSWORD);
             } else {
-                url = ConfigurationManager.getProperty(Constants.JDBC_URL_PROD);
-                user = ConfigurationManager.getProperty(Constants.JDBC_USER_PROD);
-                password = ConfigurationManager.getProperty(Constants.JDBC_PASSWORD_PROD);
+                url = ConfigurationManager.getString(Constants.JDBC_URL_PROD);
+                user = ConfigurationManager.getString(Constants.JDBC_USER_PROD);
+                password = ConfigurationManager.getString(Constants.JDBC_PASSWORD_PROD);
             }
 
             try {

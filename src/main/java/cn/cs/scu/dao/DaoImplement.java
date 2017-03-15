@@ -5,7 +5,7 @@ package cn.cs.scu.dao;
  * Copyright © Wanghan SCU. All Rights Reserved
  */
 public abstract class DaoImplement {
-    public abstract void updateTable();
+    public abstract void updateTable(Object[] object);
 
     public abstract Object[] getTable();
 }

@@ -26,13 +26,24 @@ public class ConfigurationManager {
     }
 
     /**
-     * 获取String型配置项
+     * 获取关键字对应的配置项
      *
      * @param key
      * @return
      */
     public static String getProperty(String key) {
         return properties.getProperty(key);
+    }
+
+
+    /**
+     * 获取String配置项
+     *
+     * @param key
+     * @return
+     */
+    public static String getString(String key) {
+        return getProperty(key);
     }
 
     /**

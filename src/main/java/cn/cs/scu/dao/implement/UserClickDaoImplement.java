@@ -10,7 +10,7 @@ import cn.cs.scu.dao.DaoImplement;
  */
 public class UserClickDaoImplement extends DaoImplement {
     @Override
-    public void updateTable() {
+    public void updateTable(Object[] userClick) {
 
     }
 

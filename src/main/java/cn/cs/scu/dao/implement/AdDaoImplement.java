@@ -1,7 +1,6 @@
 package cn.cs.scu.dao.implement;
 
 import cn.cs.scu.dao.DaoImplement;
-
 /**
  * 广告表数据访问对象实现类
  * <p>
@@ -10,7 +9,7 @@ import cn.cs.scu.dao.DaoImplement;
  */
 public class AdDaoImplement extends DaoImplement {
     @Override
-    public void updateTable() {
+    public void updateTable(Object[] ad) {
 
     }
 

@@ -8,9 +8,9 @@ import cn.cs.scu.dao.DaoImplement;
  * Created by Wanghan on 2017/3/15.
  * Copyright © Wanghan SCU. All Rights Reserved
  */
-public class ProvienceClickDaoImplement extends DaoImplement {
+public class ProvinceClickDaoImplement extends DaoImplement {
     @Override
-    public void updateTable() {
+    public void updateTable(Object[] provinceClick) {
 
     }
 
