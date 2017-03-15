@@ -21,17 +21,19 @@ object InitUnits {
       *
       * @return
       */
-    def initSparkContext(): (SparkContext, SQLContext) = {
+    def initSparkContext(): (SparkContext, SQLContext ,StreamingContext) = {
         // spark配置文件
-        val conf = getSparkConf()
+        val conf = getSparkConf
         // spark上下文环境
         val sc = new SparkContext(conf)
         // SQL上下文环境
         val sqlContext = getSQLContext(sc)
+        //streamingContext上下文环境
+        val streamingContext = getStreamingContext(sc)
         // 设置Log等级
         Logger.getRootLogger.setLevel(Level.OFF)
 
-        (sc, sqlContext)
+        (sc, sqlContext, streamingContext)
     }
 
     /**
@@ -39,7 +41,7 @@ object InitUnits {
       *
       * @return
       */
-    def getSparkConf(): SparkConf = {
+    def getSparkConf: SparkConf = {
         val local = ConfigurationManager.getBoolean(Constants.SPARK_LOCAL)
         if (local)
             new SparkConf().setAppName(Constants.SPARK_APP_NAME_SESSION).setMaster(Constants.SPARK_MASTER)
