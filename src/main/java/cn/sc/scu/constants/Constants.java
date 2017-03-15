@@ -10,6 +10,8 @@ package cn.sc.scu.constants;
 public interface Constants {
     String SPARK_MASTER = "local";
     String SPARK_LOCAL = "spark.local";
+    String SPARK_APP_NAME_SESSION = "AdRealTimeAnalysis";
+    String SPARK_STREAMING_COLLECT_TIME = "spark.streaming.collect.time";
 
     String JDBC_URL = "jdbc.url";
     String JDBC_USER = "jdbc.user";
