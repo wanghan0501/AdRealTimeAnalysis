@@ -13,9 +13,9 @@ public interface Constants {
     String SPARK_APP_NAME_SESSION = "AdRealTimeAnalysis";
     String SPARK_STREAMING_COLLECT_TIME = "spark.streaming.collect.time";
 
+    String JDBC_DRIVER = "jdbc.driver";
     String JDBC_URL = "jdbc.url";
     String JDBC_USER = "jdbc.user";
-    String JDBC_DRIVER = "jdbc.driver";
     String JDBC_PASSWORD = "jdbc.password";
     String JDBC_USER_PROD = "";
     String JDBC_URL_PROD = "";
