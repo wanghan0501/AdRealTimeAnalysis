@@ -8,7 +8,11 @@ import org.apache.spark.streaming.dstream.DStream
 object UpdateDataBase {
 
   def updateBlackList(blackList:DStream[String]): Unit ={
+    blackList.foreachRDD(rdd => {
+      rdd.foreach(s => {
 
+      })
+    })
   }
 
   def updateUserClickTimes(userClickTimes:DStream[(String, Int)]): Unit ={
