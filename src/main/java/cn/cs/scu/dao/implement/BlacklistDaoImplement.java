@@ -20,7 +20,6 @@ import java.util.ArrayList;
  */
 public class BlacklistDaoImplement extends DaoImplement {
 
-    static int a1 =0;
     /**
      * 更新黑名单表
      *
@@ -33,7 +32,6 @@ public class BlacklistDaoImplement extends DaoImplement {
             JDBCHelper jdbcHelper = JDBCHelper.getInstanse();
             String sql = "INSERT INTO " + Constants.TABLE_BLACKLIST + "(" + Constants.FIELD_USER_ID + ","
                     + Constants.FIELD_USER_NAME + ") VALUE(?,?)";
-            System.out.println(sql);
             jdbcHelper.excuteInsert(sql, blacklists, new JDBCHelper.InsertCallback() {
                 @Override
                 public void process(String sql, PreparedStatement preparedStatement, Object[] objects) throws Exception {

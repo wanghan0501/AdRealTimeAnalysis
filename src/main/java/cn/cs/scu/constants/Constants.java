@@ -31,4 +31,12 @@ public interface Constants {
     String FIELD_USER_ID = "user_id";
     String FIELD_USER_NAME = "user_name";
 
+    String FIELD_AD_ID = "ad_id";
+    String FIELD_AD_TYPE = "ad_type";
+    String FIELD_CLICK_DAY = "click_day";
+    String FIELD_CLICK_TIME = "click_time";
+    String FIELD_CLICK_NUMBER = "click_number";
+    String FIELD_PROVINCE = "province";
+    String FIELD_CITY = "city";
+
 }
