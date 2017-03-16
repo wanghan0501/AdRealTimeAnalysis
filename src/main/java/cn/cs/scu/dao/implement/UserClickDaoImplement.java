@@ -22,25 +22,24 @@ public class UserClickDaoImplement extends DaoImplement {
         if (userClicks instanceof UserClick[]) {
             // jdbc单例
             JDBCHelper jdbcHelper = JDBCHelper.getInstanse();
-            String sql = "INSERT INTO " + Constants.TABLE_USER_CLICK + "(" + Constants.FIELD_USER_ID + ","
-                    + Constants.FIELD_AD_ID + "," + Constants.FIELD_CLICK_DAY + "," +
-                    Constants.FIELD_CLICK_NUMBER + ") VALUE(?,?,?,?) ON DUPLICATE KEY UPDATE " + Constants.FIELD_CLICK_NUMBER +
-                    "=?";
-            System.out.println(sql);
-            jdbcHelper.excuteInsert(sql, userClicks, new JDBCHelper.InsertCallback() {
-                @Override
-                public void process(String sql, PreparedStatement preparedStatement, Object[] objects) throws Exception {
-                    for (UserClick userClick : (UserClick[]) userClicks) {
-                        preparedStatement.setObject(1, userClick.getUserId());
-                        preparedStatement.setObject(2, userClick.getAdId());
-                        preparedStatement.setObject(3, userClick.getClickDay());
-                        preparedStatement.setObject(4, userClick.getClickNum());
-                        preparedStatement.setObject(5, userClick.getClickNum());
-                        preparedStatement.addBatch();
-                    }
-                    // 批量插入
-                    preparedStatement.executeBatch();
+            // 如果key不存在则插入，如果存在则更新
+            String sql = "INSERT INTO " + Constants.TABLE_USER_CLICK + "(" + Constants.FIELD_USER_ID + "," +
+                    Constants.FIELD_AD_ID + "," + Constants.FIELD_CLICK_DAY + "," +
+                    Constants.FIELD_CLICK_NUMBER + ") VALUE(?,?,?,?) ON DUPLICATE KEY UPDATE " +
+                    Constants.FIELD_CLICK_NUMBER + "=?";
+
+            // mysql批量插入数据
+            jdbcHelper.excuteInsert(sql, userClicks, (sql1, preparedStatement, objects) -> {
+                for (UserClick userClick : (UserClick[]) userClicks) {
+                    preparedStatement.setObject(1, userClick.getUserId());
+                    preparedStatement.setObject(2, userClick.getAdId());
+                    preparedStatement.setObject(3, userClick.getClickDay());
+                    preparedStatement.setObject(4, userClick.getClickNum());
+                    preparedStatement.setObject(5, userClick.getClickNum());
+                    preparedStatement.addBatch();
                 }
+                // 执行批量插入
+                preparedStatement.executeBatch();
             });
         }
     }

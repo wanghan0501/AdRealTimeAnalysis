@@ -30,20 +30,20 @@ public class BlacklistDaoImplement extends DaoImplement {
         if (blacklists instanceof Blacklist[]) {
             // jdbc单例
             JDBCHelper jdbcHelper = JDBCHelper.getInstanse();
-            String sql = "INSERT INTO " + Constants.TABLE_BLACKLIST + "(" + Constants.FIELD_USER_ID + ","
-                    + Constants.FIELD_USER_NAME + ") VALUE(?,?)";
-            jdbcHelper.excuteInsert(sql, blacklists, new JDBCHelper.InsertCallback() {
-                @Override
-                public void process(String sql, PreparedStatement preparedStatement, Object[] objects) throws Exception {
-                    for (Blacklist blacklist : (Blacklist[]) blacklists) {
-                        preparedStatement.setObject(1, blacklist.getUser_id());
-                        preparedStatement.setObject(2, blacklist.getUser_name());
+            // 如果key不存在则插入，如果存在则更新
+            String sql = "INSERT INTO " + Constants.TABLE_BLACKLIST + "(" + Constants.FIELD_USER_ID + "," +
+                    Constants.FIELD_USER_NAME + ") VALUE(?,?)";
 
-                        preparedStatement.addBatch();
-                    }
-                    // 批量插入
-                    preparedStatement.executeBatch();
+            // sql批量插入数据
+            jdbcHelper.excuteInsert(sql, blacklists, (sql1, preparedStatement, objects) -> {
+                for (Blacklist blacklist : (Blacklist[]) blacklists) {
+                    preparedStatement.setObject(1, blacklist.getUser_id());
+                    preparedStatement.setObject(2, blacklist.getUser_name());
+
+                    preparedStatement.addBatch();
                 }
+                // 批量插入
+                preparedStatement.executeBatch();
             });
         }
     }
@@ -59,6 +59,9 @@ public class BlacklistDaoImplement extends DaoImplement {
         String sql = "SELECT * FROM " + Constants.TABLE_BLACKLIST;
         Long user_id = null;
         String user_name = null;
+        // 查询语句参数
+        ArrayList<Object> paramLists = new ArrayList<>();
+
         try {
             user_id = param.getLong(Constants.FIELD_USER_ID);
             user_name = param.getString(Constants.FIELD_USER_NAME);
@@ -67,33 +70,32 @@ public class BlacklistDaoImplement extends DaoImplement {
         }
 
         if (user_id != null) {
-            String currentSql = Constants.FIELD_USER_ID + " = " + user_id;
+            String currentSql = Constants.FIELD_USER_ID + " =?";
+            paramLists.add(user_id);
             sql = SqlUtils.concatSQL(sql, currentSql);
         }
         if (user_name != null) {
-            String currentSql = Constants.FIELD_USER_NAME + " = \"" + user_name + "\"";
+            String currentSql = Constants.FIELD_USER_NAME + " =?";
+            paramLists.add(user_name);
             sql = SqlUtils.concatSQL(sql, currentSql);
         }
 
         // jdbc单例
         JDBCHelper jdbcHelper = JDBCHelper.getInstanse();
-        ArrayList<Blacklist> arrayList = new ArrayList<>();
+        ArrayList<Blacklist> blacklists = new ArrayList<>();
 
-        jdbcHelper.executeQuery(sql, new JDBCHelper.QueryCallback() {
-            @Override
-            public void process(ResultSet rs) throws Exception {
-                while (rs.next()) {
-                    Blacklist blacklist = new Blacklist();
-                    blacklist.setUser_id(rs.getString(1));
-                    blacklist.setUser_name(rs.getString(2));
-                    arrayList.add(blacklist);
-                }
-
+        jdbcHelper.executeQuery(sql, paramLists.toArray(), rs -> {
+            while (rs.next()) {
+                Blacklist blacklist = new Blacklist();
+                blacklist.setUser_id(rs.getString(1));
+                blacklist.setUser_name(rs.getString(2));
+                blacklists.add(blacklist);
             }
+
         });
 
         // 返回黑名单数组对象的克隆，防止连接关闭后，数据被清空
-        return arrayList.toArray(new Blacklist[0]).clone();
+        return blacklists.toArray(new Blacklist[0]).clone();
     }
 
 }
