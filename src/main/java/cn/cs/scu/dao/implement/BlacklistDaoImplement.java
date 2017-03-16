@@ -8,6 +8,7 @@ import cn.cs.scu.jdbc.JDBCHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -18,12 +19,43 @@ import java.util.ArrayList;
  * Copyright © Wanghan SCU. All Rights Reserved
  */
 public class BlacklistDaoImplement extends DaoImplement {
-    @Override
-    public void updateTable(Object[] blacklist) {
 
+    static int a1 =0;
+    /**
+     * 更新黑名单表
+     *
+     * @param blacklists
+     */
+    @Override
+    public void updateTable(Object[] blacklists) {
+        if (blacklists instanceof Blacklist[]) {
+            // jdbc单例
+            JDBCHelper jdbcHelper = JDBCHelper.getInstanse();
+            String sql = "INSERT INTO " + Constants.TABLE_BLACKLIST + "(" + Constants.FIELD_USER_ID + ","
+                    + Constants.FIELD_USER_NAME + ") VALUE(?,?)";
+            System.out.println(sql);
+            jdbcHelper.excuteInsert(sql, blacklists, new JDBCHelper.InsertCallback() {
+                @Override
+                public void process(String sql, PreparedStatement preparedStatement, Object[] objects) throws Exception {
+                    for (Blacklist blacklist : (Blacklist[]) blacklists) {
+                        preparedStatement.setObject(1, blacklist.getUser_id());
+                        preparedStatement.setObject(2, blacklist.getUser_name());
+
+                        preparedStatement.addBatch();
+                    }
+                    // 批量插入
+                    preparedStatement.executeBatch();
+                }
+            });
+        }
     }
 
-
+    /**
+     * 获取黑名单表
+     *
+     * @param param
+     * @return
+     */
     @Override
     public Object[] getTable(JSONObject param) {
         String sql = "SELECT * FROM " + Constants.TABLE_BLACKLIST;

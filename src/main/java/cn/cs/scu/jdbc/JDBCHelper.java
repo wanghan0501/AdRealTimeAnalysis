@@ -153,12 +153,35 @@ public class JDBCHelper {
         }
     }
 
+
+    /**
+     * 插入数据
+     *
+     * @param sql
+     */
+    public void excuteInsert(String sql, Object[] objects, InsertCallback insertCallback) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            insertCallback.process(sql, pstmt, objects);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                datasource.push(conn);
+            }
+        }
+    }
+
     /**
      * 静态内部类：查询回调接口
      *
      * @author Administrator
      */
-    public static interface QueryCallback {
+    public interface QueryCallback {
 
         /**
          * 处理查询结果
@@ -168,6 +191,18 @@ public class JDBCHelper {
          */
         void process(ResultSet rs) throws Exception;
 
+    }
+
+    public interface InsertCallback {
+        /**
+         * 处理插入对象
+         *
+         * @param sql
+         * @param preparedStatement
+         * @param objects
+         * @throws Exception
+         */
+        void process(String sql, PreparedStatement preparedStatement, Object[] objects) throws Exception;
     }
 
 }
