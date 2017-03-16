@@ -1,6 +1,6 @@
 package cn.cs.scu
 
-import cn.cs.scu.analyse.realTimeAnalyse
+import cn.cs.scu.analyse.RealTimeAnalyse
 import cn.cs.scu.scalautils.{InitUnits, MyKafkaUtils}
 
 /**
@@ -15,14 +15,22 @@ object Test extends App{
 
   val zkQuorum = "localhost"
   val group = "g1"
-  val topics = "AdRealTimeLog"
+  val topics = "tttt"
 
   val data = MyKafkaUtils.createStream(ssc,zkQuorum,group,topics)
 
-  val wordCounts = realTimeAnalyse.countClickTimes(ssc,data)
+  val originData = RealTimeAnalyse.getOriginData(ssc,data)
+
+  val blackList = Array("634","660")
+
+  val filteredData = RealTimeAnalyse.filterBlackList(originData,blackList)
+
+  val userClickTimes = RealTimeAnalyse.countUserClickTimes(ssc,filteredData)
+
+//  val adClickedTimes = realTimeAnalyse.countAdClickedTimes(ssc,filteredData)
 
 
-  wordCounts.print()
+  userClickTimes.print()
   ssc.start()
   ssc.awaitTermination()
 
