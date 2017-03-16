@@ -24,8 +24,8 @@ object RealTimeAnalyse {
         })
 
         logs.map(r => {
-            val date = new DateUtils(r.head.toLong)
-            (date.getDate,r(1),r(2),r(3),r(4))
+//            val date = new DateUtils(r.head.toLong)
+            (DateUtils.getDate(r.head.toLong),r(1),r(2),r(3),r(4))
         })
 
     }

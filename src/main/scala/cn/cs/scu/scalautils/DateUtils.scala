@@ -16,3 +16,12 @@ class DateUtils(time: Long) {
   }
 
 }
+
+object DateUtils{
+  def getDate(time: Long):String = {
+
+    val sdf = new SimpleDateFormat("yyyy-MM-dd")
+
+    sdf.format(time)
+  }
+}
