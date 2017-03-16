@@ -1,9 +1,15 @@
 package cn.cs.scu.analyse
 
+import cn.cs.scu.dao.factory.DaoFactory
+import cn.cs.scu.domain.Blacklist
 import cn.cs.scu.scalautils.DateUtils
 import org.apache.spark.HashPartitioner
+import org.apache.spark.rdd.RDD
 import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.dstream.{DStream, ReceiverInputDStream}
+import org.json.JSONObject
+
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by zhangchi on 17/3/15.
@@ -17,18 +23,19 @@ object RealTimeAnalyse {
       * @return
       */
     def getOriginData(streamingContext: StreamingContext,
-                      data: ReceiverInputDStream[(String, String)]): DStream[(String,String,String,String,String)] = {
+                      data: ReceiverInputDStream[(String, String)]
+                     ): DStream[(String,String,String,String,String)] = {
 
         val logs = data.map(_._2).flatMap(_.split("\n")).map(row => {
             row.split("\t").toBuffer
         })
 
         logs.map(r => {
-//            val date = new DateUtils(r.head.toLong)
             (DateUtils.getDate(r.head.toLong),r(1),r(2),r(3),r(4))
         })
 
     }
+
 
     /**
       * 计算用户点击广告次数
@@ -53,6 +60,7 @@ object RealTimeAnalyse {
 
         counts
     }
+
 
     /**
       * 计算广告在每天每城市被点击次数
@@ -91,15 +99,28 @@ object RealTimeAnalyse {
         ds.filter(_._2 > 100).map(_._1)
     }
 
+
     /**
-      * 通过原始数据 过滤黑名单用户
-      *
-      * @param originData
-      * @param blackList
+      * 从数据库中查询黑名单
       * @return
       */
-    def filterBlackList(originData: DStream[(String,String,String,String,String)],
-                        blackList: Array[String]): DStream[(String,String,String,String,String)] = {
+    def getBlackListFromDataBase: ListBuffer[String] ={
+        val blacklistDaoImplement = DaoFactory.getBlacklistDao
+        val blacklists = blacklistDaoImplement.getTable(new JSONObject("{}")).asInstanceOf[Array[Blacklist]]
+        val blackListBuffer = new ListBuffer[String]
+        for (blacklist <- blacklists) blackListBuffer += blacklist.getUser_name
+        blackListBuffer
+    }
+
+
+    /**
+      * 获取过滤黑名单后的数据
+      * @param originData
+      * @return
+      */
+    def getFilteredData(originData:DStream[(String,String,String,String,String)]): DStream[(String,String,String,String,String)] = {
+
+        val blackList = getBlackListFromDataBase
         originData.filter(t => {
             !blackList.contains(t._4)
         })

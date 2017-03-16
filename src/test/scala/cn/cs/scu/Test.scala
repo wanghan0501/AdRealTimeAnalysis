@@ -21,14 +21,15 @@ object Test extends App{
 
   val originData = RealTimeAnalyse.getOriginData(ssc,data)
 
-  val blackList = Array("634","660")
+  val blackList = RealTimeAnalyse.getBlackListFromDataBase
 
-  val filteredData = RealTimeAnalyse.filterBlackList(originData,blackList)
+  val filteredData = RealTimeAnalyse.getFilteredData(originData)
 
   val userClickTimes = RealTimeAnalyse.countUserClickTimes(ssc,filteredData)
 
-//  val adClickedTimes = realTimeAnalyse.countAdClickedTimes(ssc,filteredData)
+  val newBlackList = RealTimeAnalyse.getBlackList(userClickTimes)
 
+//  val adClickedTimes = realTimeAnalyse.countAdClickedTimes(ssc,filteredData)
 
   userClickTimes.print()
   ssc.start()
