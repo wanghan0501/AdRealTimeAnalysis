@@ -1,6 +1,9 @@
 package cn.cs.scu.dao.implement;
 
 import cn.cs.scu.dao.DaoImplement;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * 用户表数据访问对象实现类
@@ -15,7 +18,7 @@ public class UserDaoImplement extends DaoImplement {
     }
 
     @Override
-    public Object[] getTable() {
+    public Object[] getTable(JSONObject param) {
         return new Object[0];
     }
 }

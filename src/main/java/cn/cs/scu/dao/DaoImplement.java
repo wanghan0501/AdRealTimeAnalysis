@@ -1,5 +1,8 @@
 package cn.cs.scu.dao;
 
+import org.json.JSONObject;
+
+
 /**
  * Created by Wanghan on 2017/3/15.
  * Copyright © Wanghan SCU. All Rights Reserved
@@ -7,5 +10,5 @@ package cn.cs.scu.dao;
 public abstract class DaoImplement {
     public abstract void updateTable(Object[] object);
 
-    public abstract Object[] getTable();
+    public abstract Object[] getTable(JSONObject param);
 }

@@ -11,7 +11,7 @@ import java.sql.Statement;
  */
 public class testMysql {
     public static void main(String[] args) {
-        String sql = "SELECT * FROM task";
+        String sql = "SELECT * FROM blacklist";
 
         String driver = "com.mysql.jdbc.Driver";
 
@@ -26,10 +26,10 @@ public class testMysql {
         Statement stmt = null;
         try {
             Class.forName(driver).newInstance();
-            conn = (Connection) DriverManager.getConnection("jdbc:MySQL://localhost:3306/spark_project?characterEncoding=utf8&useSSL=true", user, pwd);
+            conn = (Connection) DriverManager.getConnection("jdbc:MySQL://localhost:3306/ad?characterEncoding=utf8&useSSL=true", user, pwd);
             stmt = (Statement) conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            System.out.println(rs.getFetchSize());
+            //System.out.println(rs.getFetchSize());
             while (rs.next()){
                 System.out.println(rs.getString(1));
             }

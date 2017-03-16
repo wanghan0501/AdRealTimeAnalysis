@@ -31,7 +31,7 @@ public class ConfigurationManager {
      * @param key
      * @return
      */
-    public static String getProperty(String key) {
+    private static String getProperty(String key) {
         return properties.getProperty(key);
     }
 

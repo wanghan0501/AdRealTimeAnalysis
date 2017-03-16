@@ -84,7 +84,7 @@ public class JDBCHelper {
      *
      * @return
      */
-    public synchronized Connection getConnection() {
+    private synchronized Connection getConnection() {
         while (datasource.size() == 0) {
             try {
                 Thread.sleep(10);
@@ -97,7 +97,7 @@ public class JDBCHelper {
 
 
     /**
-     * 执行查询SQL语句
+     * 执行查询安全SQL语句
      *
      * @param sql
      * @param params
@@ -117,7 +117,6 @@ public class JDBCHelper {
                     pstmt.setObject(i + 1, params[i]);
                 }
             }
-
             rs = pstmt.executeQuery();
             callback.process(rs);
         } catch (Exception e) {
@@ -129,6 +128,30 @@ public class JDBCHelper {
         }
     }
 
+    /**
+     * 执行查询SQL语句
+     *
+     * @param sql
+     * @param callback
+     */
+    public void executeQuery(String sql, QueryCallback callback) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            callback.process(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                datasource.push(conn);
+            }
+        }
+    }
 
     /**
      * 静态内部类：查询回调接口

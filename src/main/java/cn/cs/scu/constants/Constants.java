@@ -8,7 +8,7 @@ package cn.cs.scu.constants;
  */
 
 public interface Constants {
-    String SPARK_MASTER = "local[2]";
+    String SPARK_MASTER = "local";
     String SPARK_LOCAL = "spark.local";
     String SPARK_APP_NAME_SESSION = "AdRealTimeAnalysis";
     String SPARK_STREAMING_COLLECT_TIME = "spark.streaming.collect.time";
@@ -21,4 +21,14 @@ public interface Constants {
     String JDBC_URL_PROD = "";
     String JDBC_PASSWORD_PROD = "";
     String JDBC_DATASOURCE_SIZE = "jdbc.datasource.size";
+
+    String TABLE_AD = "ad";
+    String TABLE_BLACKLIST = "blacklist";
+    String TABLE_PROVINCE_CLICK = "province_click";
+    String TABLE_USER = "user";
+    String TABLE_USER_CLICK = "user_click";
+
+    String FIELD_USER_ID = "user_id";
+    String FIELD_USER_NAME = "user_name";
+
 }

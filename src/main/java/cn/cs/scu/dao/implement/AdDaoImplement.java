@@ -1,6 +1,10 @@
 package cn.cs.scu.dao.implement;
 
 import cn.cs.scu.dao.DaoImplement;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * 广告表数据访问对象实现类
  * <p>
@@ -14,7 +18,7 @@ public class AdDaoImplement extends DaoImplement {
     }
 
     @Override
-    public Object[] getTable() {
+    public Object[] getTable(JSONObject param) {
         return new Object[0];
     }
 }
