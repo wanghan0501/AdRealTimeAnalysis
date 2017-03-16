@@ -8,8 +8,14 @@ import org.apache.spark.streaming.dstream.{DStream, ReceiverInputDStream}
 /**
   * Created by zhangchi on 17/3/15.
   */
-object realTimeAnalyse {
+object RealTimeAnalyse {
 
+    /**
+      * 返回原始数据
+      * @param streamingContext
+      * @param data
+      * @return
+      */
     def getOriginData(streamingContext: StreamingContext,
                       data: ReceiverInputDStream[(String, String)]): DStream[(String,String,String,String,String)] = {
 
@@ -86,7 +92,7 @@ object realTimeAnalyse {
     }
 
     /**
-      * 过滤黑名单用户
+      * 通过原始数据 过滤黑名单用户
       *
       * @param originData
       * @param blackList
