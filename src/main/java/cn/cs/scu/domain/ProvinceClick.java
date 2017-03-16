@@ -13,7 +13,7 @@ public class ProvinceClick implements Serializable {
     private String province = "";
     private String city = "";
     private String adId = "";
-    private String date = "";
+    private String clickDay = "";
     private Long clickNum = 0L;
 
     public String getProvince() {
@@ -40,12 +40,12 @@ public class ProvinceClick implements Serializable {
         this.adId = adId;
     }
 
-    public String getDate() {
-        return date;
+    public String getClickDay() {
+        return clickDay;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setClickDay(String clickDay) {
+        this.clickDay = clickDay;
     }
 
     public Long getClickNum() {

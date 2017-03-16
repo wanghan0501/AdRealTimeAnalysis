@@ -12,7 +12,7 @@ public class UserClick implements Serializable {
 
     private Long userId = 0L;
     private Long adId = 0L;
-    private String day = "";
+    private String clickDay = "";
     private Long clickNum = 0L;
 
     public Long getUserId() {
@@ -31,12 +31,12 @@ public class UserClick implements Serializable {
         this.adId = adId;
     }
 
-    public String getDay() {
-        return day;
+    public String getClickDay() {
+        return clickDay;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setClickDay(String clickDay) {
+        this.clickDay = clickDay;
     }
 
     public Long getClickNum() {
