@@ -2,7 +2,6 @@ package cn.cs.scu.analyse
 
 import cn.cs.scu.dao.factory.DaoFactory
 import cn.cs.scu.domain.Blacklist
-import cn.cs.scu.javautils.StringUtils
 import cn.cs.scu.scalautils.DateUtils
 import org.apache.spark.HashPartitioner
 import org.apache.spark.streaming.StreamingContext
@@ -106,7 +105,7 @@ object RealTimeAnalyse {
     * @param ds
     * @return
     */
-  def getBlackList(ds: DStream[(String, Int)]): DStream[(String,Int)] = {
+  def getBlackList(ds: DStream[(String, Int)]): DStream[(String, Int)] = {
 
     val blackList = ds.filter(_._2 > 100)
 

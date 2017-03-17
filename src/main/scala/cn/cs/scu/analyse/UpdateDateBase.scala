@@ -1,9 +1,12 @@
 package cn.cs.scu.analyse
 
+import java.util.Date
+
 import cn.cs.scu.dao.DaoImplement
 import cn.cs.scu.dao.factory.DaoFactory
-import cn.cs.scu.domain.{Blacklist, ProvinceClick, UserClick}
+import cn.cs.scu.domain.{Ad, Blacklist, ProvinceClick, UserClick}
 import cn.cs.scu.javautils.StringUtils
+import cn.cs.scu.scalautils.DateUtils
 import org.apache.spark.streaming.dstream.DStream
 
 
@@ -59,7 +62,7 @@ object UpdateDateBase {
     */
   def updateADClickedTimes(adClickedTimes: DStream[(String, Int)]): Unit = {
     adClickedTimes.foreachRDD(rdd => {
-      val list = rdd.map(r => {
+      val list1 = rdd.map(r => {
         val provinceClick = new ProvinceClick
         provinceClick.setProvince(StringUtils.getFieldFromConcatString(r._1,"\\|","province"))
         provinceClick.setCity(StringUtils.getFieldFromConcatString(r._1,"\\|","city"))
@@ -69,8 +72,20 @@ object UpdateDateBase {
         provinceClick
       }).collect().toList
 
-      val dao = DaoFactory.getProvinceClickDao
-      dao.updateTable(list.toArray.asInstanceOf[Array[AnyRef]])
+      val list2 = rdd.map(r => {
+        val ad = new Ad()
+        ad.setAdId(StringUtils.getFieldFromConcatString(r._1,"\\|","adId").toLong)
+        ad.setClickDay(StringUtils.getFieldFromConcatString(r._1,"\\|","date"))
+        ad.setClickTime(DateUtils.getTime(new Date().getTime))
+        ad.setClickNumber(r._2.toLong)
+        ad
+      }).collect().toList
+
+      val dao1 = DaoFactory.getProvinceClickDao
+      dao1.updateTable(list1.toArray.asInstanceOf[Array[AnyRef]])
+
+      val dao2 = DaoFactory.getAdDao
+      dao2.updateTable(list2.toArray.asInstanceOf[Array[AnyRef]])
 
     })
 
