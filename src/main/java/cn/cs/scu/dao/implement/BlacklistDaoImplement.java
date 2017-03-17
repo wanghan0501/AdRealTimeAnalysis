@@ -8,8 +8,6 @@ import cn.cs.scu.jdbc.JDBCHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
@@ -64,20 +62,20 @@ public class BlacklistDaoImplement extends DaoImplement {
 
         try {
             user_id = param.getLong(Constants.FIELD_USER_ID);
-            user_name = param.getString(Constants.FIELD_USER_NAME);
-        } catch (JSONException e) {
-
-        }
-
-        if (user_id != null) {
             String currentSql = Constants.FIELD_USER_ID + " =?";
             paramLists.add(user_id);
             sql = SqlUtils.concatSQL(sql, currentSql);
+        } catch (JSONException e) {
+            System.out.println("key: user_id doesn't exist");
         }
-        if (user_name != null) {
+
+        try {
+            user_name = param.getString(Constants.FIELD_USER_NAME);
             String currentSql = Constants.FIELD_USER_NAME + " =?";
             paramLists.add(user_name);
             sql = SqlUtils.concatSQL(sql, currentSql);
+        } catch (JSONException e) {
+            System.out.println("key: user_name doesn't exist");
         }
 
         // jdbc单例

@@ -2,13 +2,10 @@ package cn.cs.scu.dao.implement;
 
 import cn.cs.scu.constants.Constants;
 import cn.cs.scu.dao.DaoImplement;
-import cn.cs.scu.domain.Ad;
 import cn.cs.scu.domain.UserClick;
 import cn.cs.scu.jdbc.JDBCHelper;
 import org.json.JSONObject;
 
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
 
 /**
  * 用户点击表数据访问对象实现类
@@ -17,6 +14,12 @@ import java.util.ArrayList;
  * Copyright © Wanghan SCU. All Rights Reserved
  */
 public class UserClickDaoImplement extends DaoImplement {
+
+    /**
+     * 更新用户点击表
+     *
+     * @param userClicks
+     */
     @Override
     public void updateTable(Object[] userClicks) {
         if (userClicks instanceof UserClick[]) {

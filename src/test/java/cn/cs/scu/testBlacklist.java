@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class testBlacklist {
     public static void main(String[] args) {
         DaoImplement blacklistDaoImplement = DaoFactory.getBlacklistDao();
-        JSONObject json = new JSONObject("{\"user_id\":1,\"user_name\":\"a\"}");
+        JSONObject json = new JSONObject("{\"user_name\":\"a\"}");
 
         Blacklist[] blacklists= (Blacklist[]) blacklistDaoImplement.getTable(json);
         for(Blacklist blacklist:blacklists){
