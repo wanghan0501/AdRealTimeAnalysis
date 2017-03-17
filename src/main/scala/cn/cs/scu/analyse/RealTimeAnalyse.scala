@@ -2,6 +2,7 @@ package cn.cs.scu.analyse
 
 import cn.cs.scu.dao.factory.DaoFactory
 import cn.cs.scu.domain.Blacklist
+import cn.cs.scu.javautils.StringUtils
 import cn.cs.scu.scalautils.DateUtils
 import org.apache.spark.HashPartitioner
 import org.apache.spark.streaming.StreamingContext
@@ -61,6 +62,8 @@ object RealTimeAnalyse {
       new HashPartitioner(streamingContext.sparkContext.defaultParallelism),
       rememberPartitioner = true)
 
+    UpdateDateBase.updateUserClickTimes(counts)
+
     counts
   }
 
@@ -90,6 +93,8 @@ object RealTimeAnalyse {
       new HashPartitioner(streamingContext.sparkContext.defaultParallelism),
       rememberPartitioner = true)
 
+    UpdateDateBase.updateADClickedTimes(counts)
+
     counts
 
   }
@@ -102,7 +107,15 @@ object RealTimeAnalyse {
     * @return
     */
   def getBlackList(ds: DStream[(String, Int)]): DStream[(String)] = {
-    ds.filter(_._2 > 100).map(_._1)
+
+    val blackList = ds.filter(_._2 > 100).map(s => {
+      StringUtils.getFieldFromConcatString(s._1,"\\|","userId")
+    })
+
+//    UpdateDateBase.updateBlackList(blackList)
+
+    blackList
+
   }
 
 
@@ -116,7 +129,7 @@ object RealTimeAnalyse {
     val blacklists = blacklistDaoImplement.getTable(new JSONObject("{}"))
       .asInstanceOf[Array[Blacklist]]
     val blackListBuffer = new ListBuffer[String]
-    for (blacklist <- blacklists) blackListBuffer += blacklist.getUser_name
+    for (blacklist <- blacklists) blackListBuffer += blacklist.getUser_id
     blackListBuffer
   }
 
@@ -130,9 +143,8 @@ object RealTimeAnalyse {
   def getFilteredData(originData: DStream[(String, String, String, String, String)]
                      ): DStream[(String, String, String, String, String)] = {
 
-    val blackList = getBlackListFromDataBase
     originData.filter(t => {
-      !blackList.contains(t._4)
+      !Main.blackList.contains(t._4.trim)
     })
   }
 }

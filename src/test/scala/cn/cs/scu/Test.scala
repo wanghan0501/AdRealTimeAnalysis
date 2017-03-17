@@ -1,6 +1,7 @@
 package cn.cs.scu
 
 import cn.cs.scu.analyse.RealTimeAnalyse
+import cn.cs.scu.javautils.StringUtils
 import cn.cs.scu.scalautils.{InitUnits, MyKafkaUtils}
 
 /**
@@ -8,31 +9,9 @@ import cn.cs.scu.scalautils.{InitUnits, MyKafkaUtils}
   */
 object Test extends App{
 
-  val init = InitUnits.initSparkContext()
-  val ssc = init._3
+  val str = "date=2017-03-17|userId=509|adId=2"
 
-  ssc.checkpoint("/Users/zhangchi/temp")
-
-  val zkQuorum = "localhost"
-  val group = "g1"
-  val topics = "tttt"
-
-  val data = MyKafkaUtils.createStream(ssc,zkQuorum,group,topics)
-
-  val originData = RealTimeAnalyse.getOriginData(ssc,data)
-
-  val blackList = RealTimeAnalyse.getBlackListFromDataBase
-
-  val filteredData = RealTimeAnalyse.getFilteredData(originData)
-
-  val userClickTimes = RealTimeAnalyse.countUserClickTimes(ssc,filteredData)
-
-  val newBlackList = RealTimeAnalyse.getBlackList(userClickTimes)
-
-//  val adClickedTimes = realTimeAnalyse.countAdClickedTimes(ssc,filteredData)
-
-  userClickTimes.print()
-  ssc.start()
-  ssc.awaitTermination()
+  val userid = StringUtils.getFieldFromConcatString(str,"\\|","userId")
+  println(userid)
 
 }
