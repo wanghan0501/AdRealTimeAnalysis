@@ -3,12 +3,9 @@ package cn.cs.scu.dao.implement;
 import cn.cs.scu.constants.Constants;
 import cn.cs.scu.dao.DaoImplement;
 import cn.cs.scu.domain.ProvinceClick;
-import cn.cs.scu.domain.UserClick;
 import cn.cs.scu.jdbc.JDBCHelper;
 import org.json.JSONObject;
 
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
 
 /**
  * 省份广告点击数据访问对象实现类
@@ -17,6 +14,12 @@ import java.util.ArrayList;
  * Copyright © Wanghan SCU. All Rights Reserved
  */
 public class ProvinceClickDaoImplement extends DaoImplement {
+
+    /**
+     * 更新省份点击表
+     *
+     * @param provinceClicks
+     */
     @Override
     public void updateTable(Object[] provinceClicks) {
         if (provinceClicks instanceof ProvinceClick[]) {
@@ -45,6 +48,12 @@ public class ProvinceClickDaoImplement extends DaoImplement {
         }
     }
 
+    /**
+     * 根据查询参数得到省份点击表
+     *
+     * @param param
+     * @return
+     */
     @Override
     public Object[] getTable(JSONObject param) {
         return new Object[0];
