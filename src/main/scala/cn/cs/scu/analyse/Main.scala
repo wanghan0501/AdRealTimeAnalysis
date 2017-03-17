@@ -37,7 +37,7 @@ object Main {
 
   val userClickTimes: DStream[(String, Int)] = RealTimeAnalyse.countUserClickTimes(ssc, filteredData)
 
-  var newBlackList: DStream[String] = RealTimeAnalyse.getBlackList(userClickTimes)
+  var newBlackList: DStream[(String, Int)] = RealTimeAnalyse.getBlackList(userClickTimes)
 
   val adClickedTimes: DStream[(String, Int)] = RealTimeAnalyse.countAdClickedTimes(ssc, filteredData)
 

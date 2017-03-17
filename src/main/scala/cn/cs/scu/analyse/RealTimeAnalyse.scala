@@ -106,13 +106,11 @@ object RealTimeAnalyse {
     * @param ds
     * @return
     */
-  def getBlackList(ds: DStream[(String, Int)]): DStream[(String)] = {
+  def getBlackList(ds: DStream[(String, Int)]): DStream[(String,Int)] = {
 
-    val blackList = ds.filter(_._2 > 100).map(s => {
-      StringUtils.getFieldFromConcatString(s._1,"\\|","userId")
-    })
+    val blackList = ds.filter(_._2 > 100)
 
-//    UpdateDateBase.updateBlackList(blackList)
+    UpdateDateBase.updateBlackList(blackList)
 
     blackList
 

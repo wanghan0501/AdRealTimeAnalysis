@@ -53,7 +53,7 @@ public class MockRealTimeData extends Thread{
                     + random.nextInt(1000) + "\t" + random.nextInt(10);
 
             //topic:AdRealTimeLog,表示往这个topic发送数据，一个生产者可以往多个producer发送数据
-            kafkaProducer.send(new ProducerRecord<String, String>("AdRealTimeLog",log));
+            kafkaProducer.send(new ProducerRecord<String, String>("tttt",log));
 
             try {
                 Thread.sleep(100);
