@@ -6,11 +6,9 @@ import cn.cs.scu.domain.Ad;
 import cn.cs.scu.domain.ProvinceClick;
 import cn.cs.scu.domain.ProvinceTop3Ad;
 import cn.cs.scu.jdbc.JDBCHelper;
-import org.apache.hadoop.yarn.webapp.hamlet.HamletSpec;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 
