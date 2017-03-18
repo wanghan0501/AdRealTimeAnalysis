@@ -10,8 +10,9 @@ import cn.cs.scu.scalautils.{InitUnits, MyKafkaUtils}
   */
 object Test extends App{
 
-  val provinceTop3Ads = RealTimeAnalyse.getTop3AD
-  for (provinceTop3Ad <- provinceTop3Ads) {
-    println(provinceTop3Ad.toString)
+  val ads = RealTimeAnalyse.getClickTrend
+  for (ad <- ads) {
+    println(ad.getAdId + "\t" + ad.getClickDay + "\t" + ad.getClickTime + "\t" + ad.getClickNumber)
   }
+
 }

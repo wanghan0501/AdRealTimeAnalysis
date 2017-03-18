@@ -56,6 +56,11 @@ object Main {
 //      println(provinceTop3Ad.toString)
 //    }
 
+//    val ads = RealTimeAnalyse.getClickTrend
+//    for (ad <- ads) {
+//      println(ad.getAdId + "\t" + ad.getClickDay + "\t" + ad.getClickTime + "\t" + ad.getClickNumber)
+//    }
+
     filteredUserClickTimes.print()
     adClickedTimes.print()
     ssc.start()

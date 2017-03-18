@@ -3,8 +3,8 @@ package cn.cs.scu.analyse
 import java.util.Date
 
 import cn.cs.scu.dao.factory.DaoFactory
-import cn.cs.scu.dao.implement.ProvinceClickDaoImplement
-import cn.cs.scu.domain.{Blacklist, ProvinceTop3Ad}
+import cn.cs.scu.dao.implement.{AdDaoImplement, ProvinceClickDaoImplement}
+import cn.cs.scu.domain.{Ad, Blacklist, ProvinceTop3Ad}
 import cn.cs.scu.javautils.StringUtils
 import cn.cs.scu.scalautils.DateUtils
 import org.apache.spark.HashPartitioner
@@ -165,11 +165,22 @@ object RealTimeAnalyse {
 
   }
 
-  def getTop3AD: Array[ProvinceTop3Ad] ={
-    val date = DateUtils.getDate(new Date().getTime)
+  def getTop3AD: Array[ProvinceTop3Ad] = {
+    val timeStamp = new Date().getTime
+    val date = DateUtils.getDate(timeStamp)
     val daoImplement = DaoFactory.getProvinceClickDao.asInstanceOf[ProvinceClickDaoImplement]
     val json = new JSONObject(s"{'click_day':'$date'}")
     daoImplement.getTop3Ad(json)
+  }
+
+  def getClickTrend: Array[Ad] ={
+    val timeStamp = new Date().getTime
+    val date = DateUtils.getDate(timeStamp)
+    val timeNow = DateUtils.getTime(timeStamp)
+    val timeBefore = DateUtils.getTime(timeStamp-3600000)
+    val jsonObject = new JSONObject(s"{'start_click_day':'$date','end_click_day':'$date','start_click_time':'$timeBefore','end_click_time':'$timeNow'}")
+    val adDaoImplement = DaoFactory.getAdDao.asInstanceOf[AdDaoImplement]
+    adDaoImplement.getOneHourAdClick(jsonObject)
   }
 
 }

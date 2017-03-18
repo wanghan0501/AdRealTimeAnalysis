@@ -12,7 +12,7 @@ import org.json.JSONObject;
  */
 public class testGetOneHourAdClick {
     public static void main(String[] args) {
-        JSONObject jsonObject = new JSONObject("{\"start_click_day\":\"2017-3-12\",\"end_click_day\":\"2017-3-12\",\"start_click_time\":\"12:00:00\",\"end_click_time\":\"13:00:00\"}");
+        JSONObject jsonObject = new JSONObject("{\"start_click_day\":\"2017-3-18\",\"end_click_day\":\"2017-3-18\",\"start_click_time\":\"12:00:00\",\"end_click_time\":\"13:00:00\"}");
         //System.out.println(jsonObject);
         AdDaoImplement adDaoImplement = (AdDaoImplement) DaoFactory.getAdDao();
         Ad[] ads = adDaoImplement.getOneHourAdClick(jsonObject);
