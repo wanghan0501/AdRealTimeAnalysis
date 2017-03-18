@@ -1,7 +1,10 @@
 package cn.cs.scu.analyse
 
+import java.util.Date
+
 import cn.cs.scu.dao.factory.DaoFactory
-import cn.cs.scu.domain.Blacklist
+import cn.cs.scu.dao.implement.ProvinceClickDaoImplement
+import cn.cs.scu.domain.{Blacklist, ProvinceTop3Ad}
 import cn.cs.scu.javautils.StringUtils
 import cn.cs.scu.scalautils.DateUtils
 import org.apache.spark.HashPartitioner
@@ -160,6 +163,13 @@ object RealTimeAnalyse {
       !Main.blackList.contains(userId)
     })
 
+  }
+
+  def getTop3AD: Array[ProvinceTop3Ad] ={
+    val date = DateUtils.getDate(new Date().getTime)
+    val daoImplement = DaoFactory.getProvinceClickDao.asInstanceOf[ProvinceClickDaoImplement]
+    val json = new JSONObject(s"{'click_day':'$date'}")
+    daoImplement.getTop3Ad(json)
   }
 
 }

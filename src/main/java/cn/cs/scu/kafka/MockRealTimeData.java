@@ -13,18 +13,18 @@ public class MockRealTimeData extends Thread{
 
     private static final Random random = new Random();
     private static final String[] provinces = new String[]{"Sichuan", "Hubei", "Hunan", "Henan", "Hebei"};
-    private static final Map<String, String> provinceCityMap = new HashMap<>();
+    private static final Map<String, String[]> provinceCityMap = new HashMap<>();
 
     //生产kakfa的数据生产者，模拟生产广告数据
     private KafkaProducer<String,String> kafkaProducer;
 
     public MockRealTimeData() {
 
-        provinceCityMap.put("Sichuan", "Chengdu");
-        provinceCityMap.put("Hubei", "Wuhan");
-        provinceCityMap.put("Hunan", "Changsha");
-        provinceCityMap.put("Henan", "Zhengzhou");
-        provinceCityMap.put("Hebei", "Tangshan");
+        provinceCityMap.put("Sichuan", new String[] {"Chengdu", "Mianyang"});
+        provinceCityMap.put("Hubei", new String[] {"Wuhan", "Jingzhou"});
+        provinceCityMap.put("Hunan", new String[] {"Changsha", "Xiangtan"});
+        provinceCityMap.put("Henan", new String[] {"Zhengzhou", "Luoyang"});
+        provinceCityMap.put("Hebei", new String[] {"Shijiazhuang", "Tangshan"});
         //通过构造方法初始化参数，并构造一个生产者
         kafkaProducer = new KafkaProducer<>(getProducerConfig());
     }
@@ -47,7 +47,7 @@ public class MockRealTimeData extends Thread{
     public void run() {
         while(true) {
             String province = provinces[random.nextInt(5)];
-            String city = provinceCityMap.get(province);
+            String city = provinceCityMap.get(province)[random.nextInt(2)];
             //时间+省份+城市+userid+adid
             String log = new Date().getTime() + "\t" + province + "\t" + city + "\t"
                     + random.nextInt(1000) + "\t" + random.nextInt(10);
