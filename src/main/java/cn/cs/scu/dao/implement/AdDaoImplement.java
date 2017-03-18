@@ -157,7 +157,7 @@ public class AdDaoImplement extends DaoImplement {
      * @return
      */
     public Ad[] getOneHourAdClick(JSONObject param) {
-        String sql = "SELECT ad_id,click_day,CONCAT(SUBSTRING(click_time, 1, 5), \":00\") AS oneTime,COUNT(*) FROM " +
+        String sql = "SELECT ad_id,click_day,CONCAT(SUBSTRING(click_time, 1, 5), \":00\") AS oneTime,SUM(click_number) FROM " +
                 Constants.TABLE_AD + " WHERE (click_day BETWEEN ? AND ?) AND (click_time BETWEEN ? AND ?)" +
                 " GROUP BY ad_id, click_day,oneTime";
         String start_click_day = param.getString(Constants.FIELD_START_CLICK_DAY);
