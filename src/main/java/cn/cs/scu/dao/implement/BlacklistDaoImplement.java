@@ -29,7 +29,7 @@ public class BlacklistDaoImplement extends DaoImplement {
             // jdbc单例
             JDBCHelper jdbcHelper = JDBCHelper.getInstanse();
             // 如果key不存在则插入，如果存在则更新
-            String sql = "INSERT INTO " + Constants.TABLE_BLACKLIST + "(" + Constants.FIELD_USER_ID + "," +
+            String sql = "INSERT IGNORE INTO " + Constants.TABLE_BLACKLIST + "(" + Constants.FIELD_USER_ID + "," +
                     Constants.FIELD_USER_NAME + ") VALUE(?,?)";
 
             // sql批量插入数据

@@ -2,6 +2,7 @@ package cn.cs.scu.analyse
 
 import cn.cs.scu.dao.factory.DaoFactory
 import cn.cs.scu.domain.Blacklist
+import cn.cs.scu.javautils.StringUtils
 import cn.cs.scu.scalautils.DateUtils
 import org.apache.spark.HashPartitioner
 import org.apache.spark.streaming.StreamingContext
@@ -42,14 +43,14 @@ object RealTimeAnalyse {
     * (date=2017-03-16|userId=487|adId=9,1)
     *
     * @param streamingContext
-    * @param filteredData
+    * @param originData
     * @return
     */
   def countUserClickTimes(streamingContext: StreamingContext,
-                          filteredData: DStream[(String, String, String, String, String)]
+                          originData: DStream[(String, String, String, String, String)]
                          ): DStream[(String, Int)] = {
 
-    val userClickTimes = filteredData.map(r => {
+    val userClickTimes = originData.map(r => {
       (s"date=${r._1}|userId=${r._4}|adId=${r._5}", 1)
     })
 
@@ -72,15 +73,16 @@ object RealTimeAnalyse {
     * (date=2017-03-16|province=Henan|city=Zhengzhou|adId=5,5)
     *
     * @param streamingContext
-    * @param filteredData
+    * @param originData
     * @return
     */
   def countAdClickedTimes(streamingContext: StreamingContext,
-                          filteredData: DStream[(String, String, String, String, String)]
+                          originData: DStream[(String, String, String, String, String)]
                          ): DStream[(String, Int)] = {
 
+    val filteredDate = getFilteredOriginData(originData)
 
-    val adClickedTimes = filteredData.map(r => {
+    val adClickedTimes = filteredDate.map(r => {
       (s"date=${r._1}|province=${r._2}|city=${r._3}|adId=${r._5}", 1)
     })
 
@@ -137,11 +139,27 @@ object RealTimeAnalyse {
     * @param originData
     * @return
     */
-  def getFilteredData(originData: DStream[(String, String, String, String, String)]
+  def getFilteredOriginData(originData: DStream[(String, String, String, String, String)]
                      ): DStream[(String, String, String, String, String)] = {
 
     originData.filter(t => {
       !Main.blackList.contains(t._4.trim)
     })
   }
+
+  /**
+    * 将获取的用户点击数据过滤黑名单
+    *
+    * @param dStream
+    * @return
+    */
+  def getFilteredData(dStream: DStream[(String,Int)]):DStream[(String,Int)] = {
+
+    dStream.filter(t => {
+      val userId = StringUtils.getFieldFromConcatString(t._1,"\\|","userId").trim
+      !Main.blackList.contains(userId)
+    })
+
+  }
+
 }

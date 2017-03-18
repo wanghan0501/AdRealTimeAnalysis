@@ -29,18 +29,20 @@ object Main {
 
     val data = MyKafkaUtils.createStream(ssc, "localhost", "g1", "tttt")
 
+    //获取原始数据
     val originData = RealTimeAnalyse.getOriginData(ssc, data)
+    //获取用户点击数据
+    val userClickTimes = RealTimeAnalyse.countUserClickTimes(ssc, originData)
+    //过滤用户点击数据
+    val filteredUserClickTimes = RealTimeAnalyse.getFilteredData(userClickTimes)
+    //获取新增黑名单
+    var newBlackList = RealTimeAnalyse.getBlackList(filteredUserClickTimes)
+    //获取广告被点击数据
+    val adClickedTimes = RealTimeAnalyse.countAdClickedTimes(ssc, originData)
 
-    val filteredData = RealTimeAnalyse.getFilteredData(originData)
 
-    val userClickTimes = RealTimeAnalyse.countUserClickTimes(ssc, filteredData)
-
-    var newBlackList = RealTimeAnalyse.getBlackList(userClickTimes)
-
-    val adClickedTimes = RealTimeAnalyse.countAdClickedTimes(ssc, filteredData)
-
+    //创建更新黑名单线程
     val threadPool: ExecutorService = Executors.newFixedThreadPool(1)
-
     try {
       threadPool.execute(new UpdateBlackListThread)
     }
@@ -48,7 +50,7 @@ object Main {
       threadPool.shutdown()
     }
 
-    userClickTimes.print()
+    filteredUserClickTimes.print()
     adClickedTimes.print()
     ssc.start()
     ssc.awaitTermination()
