@@ -30,6 +30,7 @@ public class UserDaoImplement extends DaoImplement {
             String sql = "INSERT INTO " + Constants.TABLE_USER + "(" + Constants.FIELD_USER_ID + "," +
                     Constants.FIELD_USER_NAME + ") VALUE(?,?)";
 
+            //sql批量插入数据
             jdbcHelper.excuteInsert(sql, users, (sql1, preparedStatement, objects) -> {
                 for (User user : (User[]) users) {
                     preparedStatement.setObject(1, user.getUser_id());
@@ -41,6 +42,11 @@ public class UserDaoImplement extends DaoImplement {
         }
     }
 
+    /**
+     * 根据查询参数得到用户信息表
+     * @param param
+     * @return Object
+     */
     @Override
     public Object[] getTable(JSONObject param) {
         return new Object[0];

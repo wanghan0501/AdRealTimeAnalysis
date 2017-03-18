@@ -34,6 +34,7 @@ public class AdDaoImplement extends DaoImplement {
                     Constants.FIELD_CLICK_NUMBER + ") VALUE(?,?,?,?) ON DUPLICATE KEY UPDATE " + Constants.FIELD_CLICK_NUMBER +
                     "=?";
             System.out.println(sql);
+            // mysql批量插入数据
             jdbcHelper.excuteInsert(sql, ads, (sql1, preparedStatement, objects) -> {
                 for (Ad ad : (Ad[]) ads) {
                     preparedStatement.setObject(1, ad.getAdId());
@@ -43,7 +44,7 @@ public class AdDaoImplement extends DaoImplement {
                     preparedStatement.setObject(5, ad.getClickNumber());
                     preparedStatement.addBatch();
                 }
-                // 批量插入
+                // 执行批量插入
                 preparedStatement.executeBatch();
             });
         }
@@ -70,6 +71,7 @@ public class AdDaoImplement extends DaoImplement {
         // 查询语句参数
         ArrayList<Object> paramLists = new ArrayList<>();
 
+        //检查key是否存在，否则抛出异常
         try {
             ad_id = param.getLong(Constants.FIELD_AD_ID);
             String currentSql = Constants.FIELD_AD_ID + " =?";

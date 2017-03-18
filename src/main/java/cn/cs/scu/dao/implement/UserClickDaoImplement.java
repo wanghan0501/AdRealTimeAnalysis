@@ -47,6 +47,11 @@ public class UserClickDaoImplement extends DaoImplement {
         }
     }
 
+    /**
+     * 根据查询参数得到用户点击表
+     * @param param
+     * @return Object
+     */
     @Override
     public Object[] getTable(JSONObject param) {
         return new Object[0];
