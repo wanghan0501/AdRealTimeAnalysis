@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class testGetTopAd {
     public static void main (String[] args){
         ProvinceClickDaoImplement daoImplement =(ProvinceClickDaoImplement) DaoFactory.getProvinceClickDao();
-        JSONObject json = new JSONObject("{\"click_day\":\"2017-03-12\"}");
+        JSONObject json = new JSONObject("{\"click_day\":\"2017-03-17\"}");
         ProvinceTop3Ad[] provinceTop3Ads= daoImplement.getTop3Ad(json);
 
         for (ProvinceTop3Ad provinceTop3Ad :provinceTop3Ads){

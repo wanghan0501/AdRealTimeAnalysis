@@ -71,8 +71,8 @@ public class ProvinceClickDaoImplement extends DaoImplement {
      * @return
      */
     public ProvinceTop3Ad[] getTop3Ad(JSONObject param) {
-        String sql = "SELECT province,ad_id,SUM(click_number) FROM " + Constants.TABLE_PROVINCE_CLICK + " WHERE click_day = ?" +
-                " GROUP BY province,ad_id";
+        String sql = "SELECT province,ad_id,SUM(click_number) AS click_number FROM " + Constants.TABLE_PROVINCE_CLICK + " WHERE click_day = ?" +
+                " GROUP BY province,ad_id ORDER BY province,click_number DESC";
         String click_day = null;
         // 查询语句参数
         ArrayList<Object> paramLists = new ArrayList<>();

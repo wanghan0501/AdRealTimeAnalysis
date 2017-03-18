@@ -18,7 +18,7 @@ import scala.collection.mutable.ListBuffer
 
 object Main {
 
-  var blackList:ListBuffer[String] = RealTimeAnalyse.getBlackListFromDataBase
+  var blackList:ListBuffer[String] = new ListBuffer[String]
 
   def main(args: Array[String]): Unit = {
 
@@ -49,6 +49,12 @@ object Main {
     finally {
       threadPool.shutdown()
     }
+
+    //查询各省广告点击前三
+//    val provinceTop3Ads = RealTimeAnalyse.getTop3AD
+//    for (provinceTop3Ad <- provinceTop3Ads) {
+//      println(provinceTop3Ad.toString)
+//    }
 
     filteredUserClickTimes.print()
     adClickedTimes.print()

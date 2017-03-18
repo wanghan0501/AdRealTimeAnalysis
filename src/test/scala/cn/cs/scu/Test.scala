@@ -1,6 +1,7 @@
 package cn.cs.scu
 
-import cn.cs.scu.analyse.RealTimeAnalyse
+import cn.cs.scu.analyse.{RealTimeAnalyse, UpdateDateBase}
+import cn.cs.scu.domain.ProvinceTop3Ad
 import cn.cs.scu.javautils.StringUtils
 import cn.cs.scu.scalautils.{InitUnits, MyKafkaUtils}
 
@@ -9,9 +10,8 @@ import cn.cs.scu.scalautils.{InitUnits, MyKafkaUtils}
   */
 object Test extends App{
 
-  val str = "date=2017-03-17|userId=509|adId=2"
-
-  val userid = StringUtils.getFieldFromConcatString(str,"\\|","userId")
-  println(userid)
-
+  val provinceTop3Ads = RealTimeAnalyse.getTop3AD
+  for (provinceTop3Ad <- provinceTop3Ads) {
+    println(provinceTop3Ad.toString)
+  }
 }
