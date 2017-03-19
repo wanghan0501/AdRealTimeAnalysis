@@ -52,5 +52,6 @@ public interface Constants {
     String KAFKA_GROUP = "g1";
     String KAFKA_TOPICS = "tttt";
     Integer CLICK_TIMES = 100;
+    Integer THREADS_NUM = 3;
 
 }

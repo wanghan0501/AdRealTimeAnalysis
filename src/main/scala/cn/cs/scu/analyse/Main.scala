@@ -43,7 +43,7 @@ object Main {
 
 
     //创建更新黑名单线程
-    val threadPool: ExecutorService = Executors.newFixedThreadPool(3)
+    val threadPool: ExecutorService = Executors.newFixedThreadPool(Constants.THREADS_NUM)
     try {
       threadPool.execute(new UpdateBlackListThread)
       threadPool.execute(new ClickTrendThread)
