@@ -1,13 +1,14 @@
 package cn.cs.scu.constants;
 
 /**
- * 配置常量接口类
+ * 配置常量接口类，便于扩展
  * <p>
  * Created by Wanghan on 2017/3/15.
  * Copyright © Wanghan SCU. All Rights Reserved
  */
 
 public interface Constants {
+    //定义本地运行的线程数量
     String SPARK_MASTER = "local[4]";
     String SPARK_LOCAL = "spark.local";
     String SPARK_APP_NAME_SESSION = "AdRealTimeAnalysis";
