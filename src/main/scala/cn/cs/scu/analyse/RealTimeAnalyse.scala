@@ -165,6 +165,10 @@ object RealTimeAnalyse {
 
   }
 
+  /**
+    * 获取各省广告点击前三
+    * @return
+    */
   def getTop3AD: Array[ProvinceTop3Ad] = {
     val timeStamp = new Date().getTime
     val date = DateUtils.getDate(timeStamp)
@@ -173,6 +177,10 @@ object RealTimeAnalyse {
     daoImplement.getTop3Ad(json)
   }
 
+  /**
+    * 获取前一小时广告各分钟点击量
+    * @return
+    */
   def getClickTrend: Array[Ad] ={
     val timeStamp = new Date().getTime
     val date = DateUtils.getDate(timeStamp)

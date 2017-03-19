@@ -66,7 +66,7 @@ public class BlacklistDaoImplement extends DaoImplement {
             paramLists.add(user_id);
             sql = SqlUtils.concatSQL(sql, currentSql);
         } catch (JSONException e) {
-            System.out.println("key: user_id doesn't exist");
+//            System.out.println("key: user_id doesn't exist");
         }
 
         try {
@@ -75,7 +75,7 @@ public class BlacklistDaoImplement extends DaoImplement {
             paramLists.add(user_name);
             sql = SqlUtils.concatSQL(sql, currentSql);
         } catch (JSONException e) {
-            System.out.println("key: user_name doesn't exist");
+//            System.out.println("key: user_name doesn't exist");
         }
 
         // jdbc单例

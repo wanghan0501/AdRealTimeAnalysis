@@ -3,8 +3,9 @@ package cn.cs.scu.analyse
 
 import java.util.concurrent.{ExecutorService, Executors}
 
+import cn.cs.scu.constants.Constants
 import cn.cs.scu.scalautils.{InitUnits, MyKafkaUtils}
-import cn.cs.scu.threads.UpdateBlackListThread
+import cn.cs.scu.threads.{ClickTrendThread, ProvinceTop3AdsThread, UpdateBlackListThread}
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.streaming.StreamingContext
@@ -25,9 +26,9 @@ object Main {
     val init: (SparkContext, SQLContext, StreamingContext) = InitUnits.initSparkContext()
     val ssc: StreamingContext = init._3
 
-    ssc.checkpoint("/Users/zhangchi/temp")
+    ssc.checkpoint(Constants.CHECK_POINT_DIR)
 
-    val data = MyKafkaUtils.createStream(ssc, "localhost", "g1", "tttt")
+    val data = MyKafkaUtils.createStream(ssc, Constants.KAFKA_ZKQUORUM, Constants.KAFKA_GROUP, Constants.KAFKA_TOPICS)
 
     //获取原始数据
     val originData = RealTimeAnalyse.getOriginData(ssc, data)
@@ -42,9 +43,11 @@ object Main {
 
 
     //创建更新黑名单线程
-    val threadPool: ExecutorService = Executors.newFixedThreadPool(1)
+    val threadPool: ExecutorService = Executors.newFixedThreadPool(3)
     try {
       threadPool.execute(new UpdateBlackListThread)
+      threadPool.execute(new ClickTrendThread)
+      threadPool.execute(new ProvinceTop3AdsThread)
     }
     finally {
       threadPool.shutdown()

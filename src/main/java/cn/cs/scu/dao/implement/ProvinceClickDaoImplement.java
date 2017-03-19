@@ -81,7 +81,7 @@ public class ProvinceClickDaoImplement extends DaoImplement {
             click_day = param.getString(Constants.FIELD_CLICK_DAY);
             paramLists.add(click_day);
         } catch (JSONException e) {
-            System.out.println("key: click_day doesn't exist");
+//            System.out.println("key: click_day doesn't exist");
         }
 
         // jdbc单例

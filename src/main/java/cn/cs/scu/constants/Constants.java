@@ -43,4 +43,9 @@ public interface Constants {
     String FIELD_PROVINCE = "province";
     String FIELD_CITY = "city";
 
+    String CHECK_POINT_DIR = "/Users/zhangchi/temp";
+    String KAFKA_ZKQUORUM = "localhost";
+    String KAFKA_GROUP = "g1";
+    String KAFKA_TOPICS = "tttt";
+
 }

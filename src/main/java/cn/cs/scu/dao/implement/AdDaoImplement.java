@@ -33,7 +33,7 @@ public class AdDaoImplement extends DaoImplement {
                     + Constants.FIELD_CLICK_DAY + "," + Constants.FIELD_CLICK_TIME + "," +
                     Constants.FIELD_CLICK_NUMBER + ") VALUE(?,?,?,?) ON DUPLICATE KEY UPDATE " + Constants.FIELD_CLICK_NUMBER +
                     "=?";
-            System.out.println(sql);
+//            System.out.println(sql);
             jdbcHelper.excuteInsert(sql, ads, (sql1, preparedStatement, objects) -> {
                 for (Ad ad : (Ad[]) ads) {
                     preparedStatement.setObject(1, ad.getAdId());
