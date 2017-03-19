@@ -37,4 +37,9 @@ object DateUtils{
 
   }
 
+  def getMinute(time:Long):String = {
+    val sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+    sdf.format(time)
+  }
+
 }

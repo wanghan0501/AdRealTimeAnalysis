@@ -98,8 +98,8 @@ public class AdDaoImplement extends DaoImplement {
         }
 
         try {
-            end_click_day = param.getString(Constants.FIELD_END_CLICK_DAT);
-            String currentSql = Constants.FIELD_END_CLICK_DAT + " <=?";
+            end_click_day = param.getString(Constants.FIELD_END_CLICK_DAY);
+            String currentSql = Constants.FIELD_END_CLICK_DAY + " <=?";
             paramLists.add(end_click_day);
             sql = SqlUtils.concatSQL(sql, currentSql);
         } catch (JSONException e) {
@@ -161,7 +161,7 @@ public class AdDaoImplement extends DaoImplement {
                 Constants.TABLE_AD + " WHERE (click_day BETWEEN ? AND ?) AND (click_time BETWEEN ? AND ?)" +
                 " GROUP BY ad_id, click_day,oneTime";
         String start_click_day = param.getString(Constants.FIELD_START_CLICK_DAY);
-        String end_click_day = param.getString(Constants.FIELD_END_CLICK_DAT);
+        String end_click_day = param.getString(Constants.FIELD_END_CLICK_DAY);
         String start_click_time = param.getString(Constants.FIELD_START_CLICK_TIME);
         String end_click_time = param.getString(Constants.FIELD_END_CLICK_TIME);
         Object[] params = {start_click_day, end_click_day, start_click_time, end_click_time};

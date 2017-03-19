@@ -36,17 +36,21 @@ public interface Constants {
     String FIELD_AD_TYPE = "ad_type";
     String FIELD_CLICK_DAY = "click_day";
     String FIELD_START_CLICK_DAY = "start_click_day";
-    String FIELD_END_CLICK_DAT = "end_click_day";
+    String FIELD_END_CLICK_DAY = "end_click_day";
     String FIELD_CLICK_TIME = "click_time";
     String FIELD_START_CLICK_TIME = "start_click_time";
     String FIELD_END_CLICK_TIME = "end_click_time";
     String FIELD_CLICK_NUMBER = "click_number";
     String FIELD_PROVINCE = "province";
     String FIELD_CITY = "city";
+    String FIELD_DATE = "date";
+    String FIELD_USERID = "userId";
+    String FIELD_ADID = "adId";
 
     String CHECK_POINT_DIR = "/Users/zhangchi/temp";
     String KAFKA_ZKQUORUM = "localhost";
     String KAFKA_GROUP = "g1";
     String KAFKA_TOPICS = "tttt";
+    Integer CLICK_TIMES = 100;
 
 }
