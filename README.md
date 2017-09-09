@@ -29,3 +29,8 @@
 5. 使用updateStateByKey操作，实时计算每天各省各城市各广告的点击量，并时候更新到MySQL
 
 6. 使用transform结合Spark SQL，统计每天各省份top3热门广告：首先以每天各省各城市各广告的点击量数据作为基础，首先统计出每天各省份各广告的点击量；然后启动一个异步子线程，使用Spark SQL动态将数据RDD转换为DataFrame后，注册为临时表；最后使用Spark SQL开窗函数，统计出各省份top3热门的广告，并更新到MySQL中
+
+
+## 其它
+以下链接是一个从前端展示到后台数据交互流程的具体demo
+[WiFiProbeAnalysis](https://github.com/wanghan0501/WiFiProbeAnalysis)
